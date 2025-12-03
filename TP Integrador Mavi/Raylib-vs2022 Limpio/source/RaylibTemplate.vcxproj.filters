@@ -21,6 +21,12 @@
     <ClCompile Include="NubeMov.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Piso.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PersonajePrincipal.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="FondoJuego.png">
@@ -32,6 +38,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RectanguloMovimiento.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Piso.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PersonajePrincipal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

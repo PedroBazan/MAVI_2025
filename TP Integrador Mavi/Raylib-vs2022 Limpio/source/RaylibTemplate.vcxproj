@@ -155,12 +155,16 @@ xcopy "$(SolutionDir)..\lib\vld\64-bit\Microsoft.DTfW.DHL.manifest" "$(OutDir)" 
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="NubeMov.cpp" />
+    <ClCompile Include="Piso.cpp" />
+    <ClCompile Include="PersonajePrincipal.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="FondoJuego.png" />
     <Image Include="nube.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="PersonajePrincipal.h" />
+    <ClInclude Include="Piso.h" />
     <ClInclude Include="RectanguloMovimiento.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

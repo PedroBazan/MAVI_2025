@@ -4,12 +4,14 @@
 #include <string>
 #include "raylib.h"
 #include "RectanguloMovimiento.h"
+#include "Piso.h"
+#include "PersonajePrincipal.h"
 using namespace std;
 
 int main(void)
 {
     // Inicializamos una ventana de hd píxeles con un título personalizado
-    InitWindow(1280, 720, "Trabajo de MAVI");
+    InitWindow(1280, 720, "Trabajo de MAVI Integrador");
 
     // Configuramos el framerate deseado (opcional, pero recomendado)
     SetTargetFPS(60);
@@ -20,10 +22,17 @@ int main(void)
     //Cargo el fondo de una imagen
     Texture2D fondoImagen = LoadTexture("FondoJuego.png");
 	Texture2D Nube = LoadTexture("Nube.png");
+    Texture2D texJugador = LoadTexture("Cthulhito.png");
     SetTextureFilter(fondoImagen, TEXTURE_FILTER_BILINEAR);
-    
 
-    RectanguloMovimiento rect(&Nube, { 200, 200 }, { 150, 80 });
+    // Crear piso
+    Rectangle piso = { 0, 650, 1280, 70 };
+    
+    // Crear personaje
+    PersonajePrincipal jugador(&texJugador, { 200, 200 });
+
+    // nube 
+    RectanguloMovimiento rect(&Nube, { 200, 200 }, { 350, 180 });
 
     
 
@@ -36,17 +45,31 @@ int main(void)
                 break;
         }  
         
-        float dt = GetFrameTime();  // obligatorio para movimiento realista
-        rect.actualizar(dt);        // ? ACTUALIZA LA NUBE
+        float dt = GetFrameTime();  // obligatorio para movimiento
+        rect.actualizar(dt);        // ACTUALIZA LA NUBE
+        jugador.actualizar(dt, piso); // actualiza el personaje
+
+
+
         // Iniciamos la etapa de dibujo
         BeginDrawing();
 
+        ClearBackground(BLACK); // limpio la pantalla antes de dibujar
 
-        // insertamos la imagen de fondo
-		DrawTexture(fondoImagen, 0, 0, WHITE);
-        rect.dibujar();
 
-		
+        // insertamos la imagen de fondo me guie con la ia para poder hacerlo a escala y que se vea bien porque no me salia del tamaño de la ventana
+        float scaleX = (float)GetScreenWidth() / fondoImagen.width;
+        float scaleY = (float)GetScreenHeight() / fondoImagen.height;
+        float scale = (scaleX > scaleY) ? scaleX : scaleY;
+
+        DrawTextureEx(fondoImagen, { 0, 0 }, 0, scale, WHITE); //  dibujo fondo
+        DrawRectangleRec(piso, GREEN);// dibujo piso
+        jugador.dibujar();// dibujo personaje
+		rect.dibujar(); // dibujo la nube
+
+		// Dibujamos textos informativos en pantalla
+        DrawText(TextFormat("Resolucion: %dx%d", GetScreenWidth(), GetScreenHeight()), 10, 10, 20, BLACK);
+        DrawText(TextFormat("Jugador X: %.1f Y: %.1f", jugador.getRect().x, jugador.getRect().y), 10, 40, 20, BLACK);
 
         // Finalizamos el dibujo
         EndDrawing();
@@ -54,6 +77,7 @@ int main(void)
 	// descargo la textura de la imagen
     UnloadTexture(fondoImagen);
     UnloadTexture(Nube);
+    UnloadTexture(texJugador);
 
 
     // Cerramos la ventana y liberamos recursos

@@ -47,7 +47,7 @@ int main(void)
     };
     int cantPlataformas = sizeof(plataformas) / sizeof(plataformas[0]);
 
-
+    //condicion de gameover
     bool perdiste = false;
 
     
@@ -62,14 +62,28 @@ int main(void)
         }  
         
         float dt = GetFrameTime();  // obligatorio para movimiento
-        rect.actualizar(dt, plataformas, cantPlataformas);   // ACTUALIZA LA NUBE
-        jugador.actualizar(
-            dt,
-            piso,
-            plataformas,
-            cantPlataformas,
-            rect.getRect()     
-        ); // actualiza el personaje
+
+        if (!perdiste) {
+            // Actualizo nube en movimiento y jugador SOLO si no perdiste
+            rect.actualizar(dt, plataformas, cantPlataformas);
+
+            jugador.actualizar(
+                dt,
+                piso,
+                plataformas,
+                cantPlataformas,
+                rect.getRect() 
+            );
+
+            // si el jugador toca el piso -> GAME OVER
+            Rectangle rectJugador = jugador.getRect();
+            float bottomJugador = rectJugador.y + rectJugador.height;
+
+            if (bottomJugador >= piso.y) {
+                perdiste = true;
+            }
+        }
+
 
 
 
@@ -99,7 +113,15 @@ int main(void)
         DrawText(TextFormat("Resolucion: %dx%d", GetScreenWidth(), GetScreenHeight()), 10, 10, 20, BLACK);
         DrawText("mover-> D, mover <- A, Espacio salta, P para salir", 250, 10, 20, BLACK);
         DrawText(TextFormat("Jugador X: %.1f Y: %.1f", jugador.getRect().x, jugador.getRect().y), 10, 40, 20, BLACK);
-        // 
+        // mensaje de game over
+        if (perdiste) {
+            const char* mensaje = "PERDISTE!";
+            int fontSize = 60;
+            int textWidth = MeasureText(mensaje, fontSize);
+            int x = GetScreenWidth() / 2 - textWidth / 2;
+            int y = GetScreenHeight() / 2 - fontSize / 2;
+            DrawText(mensaje, x, y, fontSize, RED);
+        }
 
         // Finalizamos el dibujo
         EndDrawing();

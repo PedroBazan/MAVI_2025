@@ -2,6 +2,7 @@
 #include "PlataformaNube.h"
 
 
+
 PersonajePrincipal::PersonajePrincipal(Texture2D* tex, Vector2 posInicial)
 {
     textura = tex;
@@ -16,14 +17,16 @@ PersonajePrincipal::PersonajePrincipal(Texture2D* tex, Vector2 posInicial)
     alto = textura->height * 1.0f;
 }
 
-void PersonajePrincipal::actualizar(float dt, Rectangle piso, const PlataformaNube* plataformas, int cantPlataformas, Rectangle rectNubeMov)
+void PersonajePrincipal::actualizar(float dt, Rectangle piso,
+    const PlataformaNube* plataformas, int cantPlataformas,
+    Rectangle rectNubeMov)
 {
-    //Movimiento horizontal
-    if (IsKeyDown(KEY_D)) velocidad.x = velocidadMovimiento;
+    // Movimiento horizontal
+    if (IsKeyDown(KEY_D))      velocidad.x = velocidadMovimiento;
     else if (IsKeyDown(KEY_A)) velocidad.x = -velocidadMovimiento;
-    else velocidad.x = 0;
+    else                       velocidad.x = 0;
 
-    //salto
+    // Salto
     if (IsKeyPressed(KEY_SPACE) && !enElAire) {
         velocidad.y = fuerzaSalto;
         enElAire = true;
@@ -36,36 +39,38 @@ void PersonajePrincipal::actualizar(float dt, Rectangle piso, const PlataformaNu
     posicion.x += velocidad.x * dt;
     posicion.y += velocidad.y * dt;
 
-    // Colisión con el piso
-    Rectangle rectJugador = getRect();
+
+    // y si pisa alguna nube lo ponemos en false
     enElAire = true;
 
-    if (CheckCollisionRecs(rectJugador, piso)) {
-        posicion.y = piso.y - alto;
-        velocidad.y = 0;
-        enElAire = false;
-    }
-    rectJugador = getRect(); // por las dudas, lo recalculamos
+    // Rectángulo del jugador para colisiones
+    Rectangle rectJugador = getRect();
 
-    //colision con la nube que se mueve
-
+    // --- Colisión con la nube que se mueve ---
     if (CheckCollisionRecs(rectJugador, rectNubeMov)) {
-        // ver porque solo cuando caigo
+        bool caeDesdeArriba =
+            (velocidad.y > 0) &&
+            (rectJugador.y + rectJugador.height <= rectNubeMov.y + 15);
 
-        if (velocidad.y > 0 && rectJugador.y + rectJugador.height <= rectNubeMov.y + 10) {
+        if (caeDesdeArriba) {
             posicion.y = rectNubeMov.y - alto;
             velocidad.y = 0;
             enElAire = false;
+            rectJugador = getRect(); // recalculamos por las dudas
         }
     }
-    //Colisión con plataformas
+
+    // --- Colisión con plataformas estáticas ---
     for (int i = 0; i < cantPlataformas; i++) {
         Rectangle nube = plataformas[i].getRect();
+        rectJugador = getRect(); // por si ajustamos antes
 
-        if (CheckCollisionRecs(getRect(), nube)) {
+        if (CheckCollisionRecs(rectJugador, nube)) {
+            bool caeDesdeArriba =
+                (velocidad.y > 0) &&
+                (rectJugador.y + rectJugador.height <= nube.y + 15);
 
-            // Solo colisionamos si venimos cayendo
-            if (velocidad.y > 0 && rectJugador.y + rectJugador.height <= nube.y + 10) {
+            if (caeDesdeArriba) {
                 posicion.y = nube.y - alto;
                 velocidad.y = 0;
                 enElAire = false;

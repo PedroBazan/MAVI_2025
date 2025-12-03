@@ -154,9 +154,11 @@ xcopy "$(SolutionDir)..\lib\vld\64-bit\Microsoft.DTfW.DHL.manifest" "$(OutDir)" 
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="NubeMov.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="FondoJuego.png" />
+    <Image Include="nube.png" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RectanguloMovimiento.h" />

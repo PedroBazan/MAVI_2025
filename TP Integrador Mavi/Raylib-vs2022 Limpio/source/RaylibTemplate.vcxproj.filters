@@ -18,9 +18,15 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="NubeMov.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="FondoJuego.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="nube.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

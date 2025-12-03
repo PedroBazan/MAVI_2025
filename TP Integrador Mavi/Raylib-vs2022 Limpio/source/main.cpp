@@ -3,10 +3,11 @@
 #endif
 #include <string>
 #include "raylib.h"
+#include "PlataformaNube.h"
 #include "RectanguloMovimiento.h"
 #include "Piso.h"
 #include "PersonajePrincipal.h"
-#include "PlataformaNube.h"
+
 using namespace std;
 
 int main(void)
@@ -22,23 +23,27 @@ int main(void)
    
     //Cargo el fondo de una imagen
     Texture2D fondoImagen = LoadTexture("FondoJuego.png");
-	Texture2D Nube = LoadTexture("Nube.png");
+    Texture2D texturaNube = LoadTexture("Nube.png");
     Texture2D texJugador = LoadTexture("Cthulhito.png");
     SetTextureFilter(fondoImagen, TEXTURE_FILTER_BILINEAR);
 
     // Crear piso
     Rectangle piso = { 0, 650, 1280, 70 };
+    Piso pisoVisual(0, 650, 1280, 70, GREEN);
     
     // Crear personaje
     PersonajePrincipal jugador(&texJugador, { 200, 200 });
 
     // nube voladora
-    RectanguloMovimiento rect(&Nube, { 200, 200 }, { 350, 180 });
+    RectanguloMovimiento rect(&texturaNube, { 200, 200 }, { 350, 180 });
 
-    //nubes quietas
-    PlataformaNube nube1(200, 500, 120, 40, WHITE);
-    PlataformaNube nube2(400, 400, 120, 40, WHITE);
-    PlataformaNube nube3(650, 300, 120, 40, WHITE);
+    //nubes quietas (hice un array para simplificar)
+    PlataformaNube plataformas[] = {
+    PlataformaNube(&texturaNube, 200, 500, 120, 40, WHITE),
+    PlataformaNube(&texturaNube, 400, 400, 120, 40, WHITE),
+    PlataformaNube(&texturaNube, 650, 300, 120, 40, WHITE)
+    };
+    int cantPlataformas = sizeof(plataformas) / sizeof(plataformas[0]);
 
     
 
@@ -52,8 +57,8 @@ int main(void)
         }  
         
         float dt = GetFrameTime();  // obligatorio para movimiento
-        rect.actualizar(dt);        // ACTUALIZA LA NUBE
-        jugador.actualizar(dt, piso); // actualiza el personaje
+        rect.actualizar(dt, plataformas, cantPlataformas);       // ACTUALIZA LA NUBE
+        jugador.actualizar(dt, piso, plataformas, cantPlataformas); // actualiza el personaje
 
 
 
@@ -69,14 +74,13 @@ int main(void)
         float scale = (scaleX > scaleY) ? scaleX : scaleY;
 
         DrawTextureEx(fondoImagen, { 0, 0 }, 0, scale, WHITE); //  dibujo fondo
-        Piso piso(0, 650, 1280, 70, GREEN);// dibujo piso
+        pisoVisual.dibujar(); // dibujo piso
         jugador.dibujar();// dibujo personaje
 		rect.dibujar(); // dibujo la nube movimiento
 
-        // dibujo nubes estaticas
-        nube1.dibujar();
-        nube2.dibujar();
-        nube3.dibujar();
+        // dibujo nubes estaticas en array
+        for (int i = 0; i < cantPlataformas; i++)
+            plataformas[i].dibujar();
 
 
 
@@ -91,7 +95,7 @@ int main(void)
     }
 	// descargo la textura de la imagen
     UnloadTexture(fondoImagen);
-    UnloadTexture(Nube);
+    UnloadTexture(texturaNube);
     UnloadTexture(texJugador);
 
 

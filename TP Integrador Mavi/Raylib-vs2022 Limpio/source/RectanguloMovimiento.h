@@ -2,7 +2,7 @@
 #ifndef RECTANGULOMOVIMIENTO_H
 #define RECTANGULOMOVIMIENTO_H
 #include "raylib.h"
-#include <string>
+#include "PlataformaNube.h"
 using namespace std;
 
 class RectanguloMovimiento{
@@ -15,17 +15,19 @@ private:
 public: 
 	// Constructor que inicializa la textura, posición, velocidad, ancho y alto del rectángulo
 	RectanguloMovimiento(Texture2D* tex, Vector2 posInicial, Vector2 velInicial);
-	// Destructor: Esencial para descargar la textura de la GPU.
+	// Destructor
 	~RectanguloMovimiento();
-	// Método para actualizar la posición del rectángulo
-	void actualizar(float deltaTime);
+	//colisiones con las plataformas
+	void actualizar(float dt, const PlataformaNube* plataformas, int cantPlataformas);
 	// Método para dibujar el rectángulo en la pantalla
 	void dibujar() const;
 	// Métodos para obtener información (Getters)
 	Vector2 getPosicion() const;
 	Vector2 getVelocidad() const;
+	Rectangle getRect() const;
 	float getAncho() const { return (float)textura->width; }
 	float getAlto()  const { return (float)textura->height; }
+
 };
 #endif // RECTANGULOMOVIMIENTO_H
 

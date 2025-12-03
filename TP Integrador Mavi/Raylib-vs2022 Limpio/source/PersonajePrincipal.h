@@ -3,6 +3,7 @@
 #define PERSONAJEPRINCIPAL_H
 
 #include "raylib.h"
+#include "PlataformaNube.h"
 
 class PersonajePrincipal {
 private:
@@ -18,7 +19,8 @@ private:
 public:
     PersonajePrincipal(Texture2D* tex, Vector2 posInicial);
 
-    void actualizar(float dt, Rectangle piso);
+    void actualizar(float dt, Rectangle piso,
+        const PlataformaNube* plataformas, int cantPlataformas);
     void dibujar() const;
 
     Rectangle getRect() const; // Para colisiones

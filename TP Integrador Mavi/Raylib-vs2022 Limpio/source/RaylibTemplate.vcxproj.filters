@@ -27,12 +27,18 @@
     <ClCompile Include="PersonajePrincipal.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PlataformaNube.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="FondoJuego.png">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="nube.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Cthulhito.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
@@ -44,6 +50,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PersonajePrincipal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PlataformaNube.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

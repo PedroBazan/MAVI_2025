@@ -6,6 +6,7 @@
 #include "RectanguloMovimiento.h"
 #include "Piso.h"
 #include "PersonajePrincipal.h"
+#include "PlataformaNube.h"
 using namespace std;
 
 int main(void)
@@ -31,8 +32,13 @@ int main(void)
     // Crear personaje
     PersonajePrincipal jugador(&texJugador, { 200, 200 });
 
-    // nube 
+    // nube voladora
     RectanguloMovimiento rect(&Nube, { 200, 200 }, { 350, 180 });
+
+    //nubes quietas
+    PlataformaNube nube1(200, 500, 120, 40, WHITE);
+    PlataformaNube nube2(400, 400, 120, 40, WHITE);
+    PlataformaNube nube3(650, 300, 120, 40, WHITE);
 
     
 
@@ -63,13 +69,22 @@ int main(void)
         float scale = (scaleX > scaleY) ? scaleX : scaleY;
 
         DrawTextureEx(fondoImagen, { 0, 0 }, 0, scale, WHITE); //  dibujo fondo
-        DrawRectangleRec(piso, GREEN);// dibujo piso
+        Piso piso(0, 650, 1280, 70, GREEN);// dibujo piso
         jugador.dibujar();// dibujo personaje
-		rect.dibujar(); // dibujo la nube
+		rect.dibujar(); // dibujo la nube movimiento
+
+        // dibujo nubes estaticas
+        nube1.dibujar();
+        nube2.dibujar();
+        nube3.dibujar();
+
+
 
 		// Dibujamos textos informativos en pantalla
         DrawText(TextFormat("Resolucion: %dx%d", GetScreenWidth(), GetScreenHeight()), 10, 10, 20, BLACK);
+        DrawText("-> D, <- A, Espacio salta, P para salir", 250, 10, 20, BLACK);
         DrawText(TextFormat("Jugador X: %.1f Y: %.1f", jugador.getRect().x, jugador.getRect().y), 10, 40, 20, BLACK);
+        // 
 
         // Finalizamos el dibujo
         EndDrawing();

@@ -14,9 +14,9 @@ int main(void)
     SetTargetFPS(60);
 
     Color fondo = { 0, 255, 0, 1 };//color violeta personalizado
-    Color texto = DARKPURPLE;
+    Color texto = DARKPURPLE;  // color de texto personalizado
+   
     //Cargo el fondo de una imagen
-
     Texture2D fondoImagen = LoadTexture("FondoJuego.png");
     SetTextureFilter(fondoImagen, TEXTURE_FILTER_BILINEAR);
 
@@ -31,8 +31,7 @@ int main(void)
         if (IsKeyPressed(KEY_P)) {
             CloseWindow();
                 break;
-        }
-                
+        }  
         
         if (IsKeyPressed(KEY_SPACE)) {
             mostrarMensaje2 = !mostrarMensaje2;// funcion switch usada para alternar entre dos estados
@@ -43,19 +42,18 @@ int main(void)
         // insertamos la imagen de fondo
 		DrawTexture(fondoImagen, 0, 0, WHITE);
 
-		// Dibujamos un texto centrado, aca damos la posicion, el tamaño y el color
+		// Dibujamos un texto centrado, aca damos la posicion, el tamaño y el color alternamos el texto con la tecla espacio
         if (mostrarMensaje2) {
             DrawText("Felicitaciones, ejecutaste tu primer proyecto con Raylib!!!", 350, 360, 20, texto);
-            DrawRectangle(350, 360, 588, 20, Fade(DARKGREEN, 0.5f));
+			DrawRectangle(350, 360, 588, 20, Fade(DARKGREEN, 0.5f));//rectangulo decorativo
+
         }
         else {
             DrawText("Estas rapasando la unidad 1? ", 350, 360, 20, DARKBLUE);
-            DrawRectangle(350, 360, 388, 20, Fade(MAGENTA, 0.5f));
+            DrawRectangle(350, 360, 388, 20, Fade(MAGENTA, 0.5f)); // rectangulo decorativo
+
 
 		}
-
-        // Dibujamos un rectángulo a modo decorativo
-         // Fondo semitransparente para resaltar el texto
 
         // Finalizamos el dibujo
         EndDrawing();

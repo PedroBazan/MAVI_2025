@@ -15,12 +15,15 @@ private:
     float gravedad;
     float fuerzaSalto;
     float velocidadMovimiento;
+    float ancho;  
+    float alto;
 
 public:
     PersonajePrincipal(Texture2D* tex, Vector2 posInicial);
 
     void actualizar(float dt, Rectangle piso,
-        const PlataformaNube* plataformas, int cantPlataformas);
+        const PlataformaNube* plataformas, int cantPlataformas,
+        Rectangle rectNubeMov); // colisiones agregada la nube que se mueve
     void dibujar() const;
 
     Rectangle getRect() const; // Para colisiones

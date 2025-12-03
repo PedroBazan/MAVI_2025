@@ -10,12 +10,13 @@ private:
 	Texture2D* textura; // Textura del rectángulo
 	Vector2 posicion;  // Posición del rectángulo
 	Vector2 velocidad; // Velocidad de movimiento del rectángulo
+	float ancho; 
+	float alto;
 	
 
 public: 
 	// Constructor que inicializa la textura, posición, velocidad, ancho y alto del rectángulo
-	RectanguloMovimiento(Texture2D* tex, Vector2 posInicial, Vector2 velInicial);
-	// Destructor
+	RectanguloMovimiento(Texture2D* tex, Vector2 posInicial, Vector2 velInicial, float w, float h);
 	~RectanguloMovimiento();
 	//colisiones con las plataformas
 	void actualizar(float dt, const PlataformaNube* plataformas, int cantPlataformas);

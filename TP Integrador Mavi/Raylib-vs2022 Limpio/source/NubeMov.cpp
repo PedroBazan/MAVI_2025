@@ -1,12 +1,14 @@
 #include "RectanguloMovimiento.h"
 #include "raylib.h"
 
-// Constructor
-RectanguloMovimiento::RectanguloMovimiento(Texture2D* tex, Vector2 posInicial, Vector2 velInicial)
+// Constructor modificado para dar ancho y alto
+RectanguloMovimiento::RectanguloMovimiento(Texture2D* tex, Vector2 posInicial, Vector2 velInicial, float w, float h)
 {
     textura = tex;
     posicion = posInicial;
     velocidad = velInicial;
+    ancho = w;
+    alto = h;
 }
 
 RectanguloMovimiento::~RectanguloMovimiento()
@@ -42,20 +44,21 @@ void RectanguloMovimiento::actualizar(float deltaTime, const PlataformaNube* pla
 // Dibujo
 void RectanguloMovimiento::dibujar() const
 {
-    DrawTexture(*textura, (int)posicion.x, (int)posicion.y, WHITE);
+    DrawTexturePro(
+        *textura,
+        { 0, 0, (float)textura->width, (float)textura->height },   // parte que recorta
+        { posicion.x, posicion.y, ancho, alto },                   // destino con escala
+        { 0, 0 },
+        0,
+        WHITE
+    );
 }
+
 
 Rectangle RectanguloMovimiento::getRect() const
 {
-    return { posicion.x, posicion.y, (float)textura->width, (float)textura->height };
+    return { posicion.x, posicion.y, ancho, alto };
 }
 
-Vector2 RectanguloMovimiento::getPosicion() const
-{
-    return posicion;
-}
-
-Vector2 RectanguloMovimiento::getVelocidad() const
-{
-    return velocidad;
-}
+Vector2 RectanguloMovimiento::getPosicion() const { return posicion; }
+Vector2 RectanguloMovimiento::getVelocidad() const { return velocidad; }

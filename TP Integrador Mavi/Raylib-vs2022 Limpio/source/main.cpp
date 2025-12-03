@@ -35,15 +35,20 @@ int main(void)
     PersonajePrincipal jugador(&texJugador, { 200, 200 });
 
     // nube voladora
-    RectanguloMovimiento rect(&texturaNube, { 200, 200 }, { 350, 180 });
+    RectanguloMovimiento rect(&texturaNube, { 200, 200 }, { 350, 180 }, 120, 60);
 
     //nubes quietas (hice un array para simplificar)
     PlataformaNube plataformas[] = {
     PlataformaNube(&texturaNube, 200, 500, 120, 40, WHITE),
-    PlataformaNube(&texturaNube, 400, 400, 120, 40, WHITE),
-    PlataformaNube(&texturaNube, 650, 300, 120, 40, WHITE)
+   // PlataformaNube(&texturaNube, 400, 400, 120, 40, WHITE), desactivada para darle dificultad
+    PlataformaNube(&texturaNube, 800, 500, 120, 40, WHITE),
+    PlataformaNube(&texturaNube, 650, 120, 120, 40, WHITE),
+    PlataformaNube(&texturaNube, 1040, 120, 120, 40, WHITE)
     };
     int cantPlataformas = sizeof(plataformas) / sizeof(plataformas[0]);
+
+
+    bool perdiste = false;
 
     
 
@@ -57,8 +62,14 @@ int main(void)
         }  
         
         float dt = GetFrameTime();  // obligatorio para movimiento
-        rect.actualizar(dt, plataformas, cantPlataformas);       // ACTUALIZA LA NUBE
-        jugador.actualizar(dt, piso, plataformas, cantPlataformas); // actualiza el personaje
+        rect.actualizar(dt, plataformas, cantPlataformas);   // ACTUALIZA LA NUBE
+        jugador.actualizar(
+            dt,
+            piso,
+            plataformas,
+            cantPlataformas,
+            rect.getRect()     
+        ); // actualiza el personaje
 
 
 
@@ -86,7 +97,7 @@ int main(void)
 
 		// Dibujamos textos informativos en pantalla
         DrawText(TextFormat("Resolucion: %dx%d", GetScreenWidth(), GetScreenHeight()), 10, 10, 20, BLACK);
-        DrawText("-> D, <- A, Espacio salta, P para salir", 250, 10, 20, BLACK);
+        DrawText("mover-> D, mover <- A, Espacio salta, P para salir", 250, 10, 20, BLACK);
         DrawText(TextFormat("Jugador X: %.1f Y: %.1f", jugador.getRect().x, jugador.getRect().y), 10, 40, 20, BLACK);
         // 
 

@@ -6,7 +6,7 @@
 
 class PlataformaNube {
 private:
-    Texture2D* textura;   // <-- nombre correcto en ambos archivos
+    Texture2D* textura;   // fijarse porque me da error corregir nombres
 public:
     Rectangle rect;
     Color color;

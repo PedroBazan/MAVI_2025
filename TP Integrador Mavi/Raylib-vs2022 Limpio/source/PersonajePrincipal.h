@@ -19,7 +19,10 @@ private:
     float alto;
 
 public:
+
     PersonajePrincipal(Texture2D* tex, Vector2 posInicial);
+
+    void reiniciar(Vector2 posInicial); //  para reiniciar una vez que perdio. 
 
     void actualizar(float dt, Rectangle piso,
         const PlataformaNube* plataformas, int cantPlataformas,

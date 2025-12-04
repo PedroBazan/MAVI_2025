@@ -28,6 +28,8 @@ public:
 	Rectangle getRect() const;
 	float getAncho() const { return (float)textura->width; }
 	float getAlto()  const { return (float)textura->height; }
+	// reiniciar al gameove
+	void reiniciar(Vector2 posInicial, Vector2 velInicial);
 
 };
 #endif // RECTANGULOMOVIMIENTO_H

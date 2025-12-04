@@ -40,6 +40,12 @@ void RectanguloMovimiento::actualizar(float deltaTime, const PlataformaNube* pla
     if (posicion.y < 0 || posicion.y + textura->height > GetScreenHeight())
         velocidad.y *= -1;
 }
+//reiniciar
+void RectanguloMovimiento::reiniciar(Vector2 posInicial, Vector2 velInicial)
+{
+    posicion = posInicial;
+    velocidad = velInicial;
+}
 
 // Dibujo
 void RectanguloMovimiento::dibujar() const

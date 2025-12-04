@@ -16,6 +16,12 @@ PersonajePrincipal::PersonajePrincipal(Texture2D* tex, Vector2 posInicial)
     ancho = textura->width * 1.0f;
     alto = textura->height * 1.0f;
 }
+void PersonajePrincipal::reiniciar(Vector2 posInicial) // para reiniciar
+{
+    posicion = posInicial;
+    velocidad = { 0, 0 };
+    enElAire = false;
+}
 
 void PersonajePrincipal::actualizar(float dt, Rectangle piso,
     const PlataformaNube* plataformas, int cantPlataformas,

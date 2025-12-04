@@ -24,9 +24,7 @@ public:
 
     void reiniciar(Vector2 posInicial); //  para reiniciar una vez que perdio. 
 
-    void actualizar(float dt, Rectangle piso,
-        const PlataformaNube* plataformas, int cantPlataformas,
-        Rectangle rectNubeMov); // colisiones agregada la nube que se mueve
+    void actualizar(float dt, Rectangle piso, const PlataformaNube* plataformas, int cantPlataformas, Rectangle rectNubeMov, Sound sonidoSalto); // colisiones agregada la nube que se mueve
     void dibujar() const;
 
     Rectangle getRect() const; // Para colisiones

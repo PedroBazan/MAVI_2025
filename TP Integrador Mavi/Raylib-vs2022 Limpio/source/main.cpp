@@ -15,6 +15,9 @@ int main(void)
     // Inicializamos una ventana de hd píxeles con un título personalizado
     InitWindow(1280, 720, "Trabajo de MAVI Integrador");
 
+    // agrego sonido
+    InitAudioDevice();
+
     // Configuramos el framerate deseado (opcional, pero recomendado)
     SetTargetFPS(60);
 
@@ -25,6 +28,8 @@ int main(void)
     Texture2D fondoImagen = LoadTexture("FondoJuego.png");
     Texture2D texturaNube = LoadTexture("Nube.png");
     Texture2D texJugador = LoadTexture("Cthulhito.png");
+    Texture2D texTesoro = LoadTexture("tesorito.png");
+    Sound sonidoSalto = LoadSound("boing.wav");
     SetTextureFilter(fondoImagen, TEXTURE_FILTER_BILINEAR);
 
     // Crear piso
@@ -35,12 +40,12 @@ int main(void)
     PersonajePrincipal jugador(&texJugador, { 200, 200 });
 
     // nube voladora
-    RectanguloMovimiento rect(&texturaNube, { 200, 200 }, { 350, 180 }, 120, 60);
+    RectanguloMovimiento rect(&texturaNube, { 200, 200 }, { 230, 180 }, 120, 60);
 
     //nubes quietas (hice un array para simplificar)
     PlataformaNube plataformas[] = {
     PlataformaNube(&texturaNube, 200, 500, 120, 40, WHITE),
-    PlataformaNube(&texturaNube, 400, 400, 120, 40, WHITE), //desactivada para darle dificultad pero lo activo para probar ganar
+    //PlataformaNube(&texturaNube, 400, 400, 120, 40, WHITE), //desactivada para darle dificultad pero lo activo para probar ganar
     PlataformaNube(&texturaNube, 800, 500, 120, 40, WHITE),
     PlataformaNube(&texturaNube, 650, 120, 120, 40, WHITE),
     PlataformaNube(&texturaNube, 1040, 120, 120, 40, WHITE)
@@ -48,12 +53,13 @@ int main(void)
     int cantPlataformas = sizeof(plataformas) / sizeof(plataformas[0]);
 
     // Tesoro encima de la 4ta nube (indice 3)
-    float anchoTesoro = 40;
-    float altoTesoro = 40;
+    float escalaTesoro = 1.0f; 
+    float anchoTesoro = texTesoro.width * escalaTesoro;
+    float altoTesoro = texTesoro.height * escalaTesoro;
 
     Rectangle tesoroRect = {
         plataformas[3].rect.x + plataformas[3].rect.width / 2 - anchoTesoro / 2,
-        plataformas[3].rect.y - altoTesoro - 10, // un poquito arriba
+        plataformas[3].rect.y - altoTesoro - 1, // un poquito arriba
         anchoTesoro,
         altoTesoro
     };
@@ -82,6 +88,13 @@ int main(void)
             CloseWindow();
                 break;
         }  
+        if (IsKeyPressed(KEY_R)) {
+            perdiste = false;
+            ganaste = false;   // si tenés la variable ganaste
+
+            jugador.reiniciar({ 200, 200 });
+            rect.reiniciar({ 200, 200 }, { 350, 180 });
+        }
         
         float dt = GetFrameTime();  // obligatorio para movimiento
 
@@ -94,7 +107,8 @@ int main(void)
                 piso,
                 plataformas,
                 cantPlataformas,
-                rect.getRect() 
+                rect.getRect(), 
+                sonidoSalto
             );
 
 
@@ -119,6 +133,7 @@ int main(void)
             {
                 // Reiniciar estados
                 perdiste = false;
+                ganaste = false;
 
                 // volver a posiciones originales
                 jugador.reiniciar({ 200, 200 });
@@ -152,14 +167,21 @@ int main(void)
 
         // dibujo tesoro
         if (!ganaste) {
-            DrawRectangleRec(tesoroRect, GOLD);
+            DrawTexturePro(
+                texTesoro,
+                { 0, 0, (float)texTesoro.width, (float)texTesoro.height }, 
+                tesoroRect,                                                
+                { 0, 0 },                                                  
+                0.0f,                                                      
+                WHITE
+            );
         }
 
 
 
 		// Dibujamos textos informativos en pantalla
         DrawText(TextFormat("Resolucion: %dx%d", GetScreenWidth(), GetScreenHeight()), 10, 10, 20, BLACK);
-        DrawText("mover-> D, mover <- A, Espacio salta, P para salir", 250, 10, 20, BLACK);
+        DrawText("mover-> D, mover <- A, Espacio salta, P para salir, R reiniciar ", 250, 10, 20, BLACK);
         DrawText(TextFormat("Jugador X: %.1f Y: %.1f", jugador.getRect().x, jugador.getRect().y), 10, 40, 20, BLACK);
         // mensaje de game over
         if (perdiste || ganaste) {
@@ -192,6 +214,8 @@ int main(void)
     UnloadTexture(fondoImagen);
     UnloadTexture(texturaNube);
     UnloadTexture(texJugador);
+    UnloadTexture(texTesoro);
+    CloseAudioDevice();
 
 
     // Cerramos la ventana y liberamos recursos

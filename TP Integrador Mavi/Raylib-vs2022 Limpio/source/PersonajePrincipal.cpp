@@ -23,9 +23,7 @@ void PersonajePrincipal::reiniciar(Vector2 posInicial) // para reiniciar
     enElAire = false;
 }
 
-void PersonajePrincipal::actualizar(float dt, Rectangle piso,
-    const PlataformaNube* plataformas, int cantPlataformas,
-    Rectangle rectNubeMov)
+void PersonajePrincipal::actualizar(float dt, Rectangle piso,const PlataformaNube* plataformas, int cantPlataformas, Rectangle rectNubeMov, Sound sonidoSalto)
 {
     // Movimiento horizontal
     if (IsKeyDown(KEY_D))      velocidad.x = velocidadMovimiento;
@@ -36,6 +34,8 @@ void PersonajePrincipal::actualizar(float dt, Rectangle piso,
     if (IsKeyPressed(KEY_SPACE) && !enElAire) {
         velocidad.y = fuerzaSalto;
         enElAire = true;
+
+        PlaySound(sonidoSalto);
     }
 
     // Gravedad

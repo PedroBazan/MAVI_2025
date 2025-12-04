@@ -41,6 +41,9 @@
     <Image Include="Cthulhito.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="tesorito.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RectanguloMovimiento.h">
@@ -55,5 +58,10 @@
     <ClInclude Include="PlataformaNube.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="boing.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
   </ItemGroup>
 </Project>

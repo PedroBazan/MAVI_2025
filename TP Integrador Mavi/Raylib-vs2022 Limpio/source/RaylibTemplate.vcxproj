@@ -163,12 +163,16 @@ xcopy "$(SolutionDir)..\lib\vld\64-bit\Microsoft.DTfW.DHL.manifest" "$(OutDir)" 
     <Image Include="Cthulhito.png" />
     <Image Include="FondoJuego.png" />
     <Image Include="nube.png" />
+    <Image Include="tesorito.png" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PlataformaNube.h" />
     <ClInclude Include="PersonajePrincipal.h" />
     <ClInclude Include="Piso.h" />
     <ClInclude Include="RectanguloMovimiento.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="boing.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

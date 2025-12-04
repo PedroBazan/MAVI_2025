@@ -30,6 +30,9 @@
     <ClCompile Include="PlataformaNube.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Enemigo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="FondoJuego.png">
@@ -44,6 +47,9 @@
     <Image Include="tesorito.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Enemigo.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RectanguloMovimiento.h">
@@ -56,6 +62,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PlataformaNube.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemigo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

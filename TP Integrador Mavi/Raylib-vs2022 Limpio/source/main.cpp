@@ -7,6 +7,7 @@
 #include "RectanguloMovimiento.h"
 #include "Piso.h"
 #include "PersonajePrincipal.h"
+#include "Enemigo.h"
 
 using namespace std;
 
@@ -29,6 +30,7 @@ int main(void)
     Texture2D texturaNube = LoadTexture("Nube.png");
     Texture2D texJugador = LoadTexture("Cthulhito.png");
     Texture2D texTesoro = LoadTexture("tesorito.png");
+    Texture2D texEnemigo = LoadTexture("Enemigo.png");
     Sound sonidoSalto = LoadSound("boing.wav");
     SetTextureFilter(fondoImagen, TEXTURE_FILTER_BILINEAR);
 
@@ -40,15 +42,25 @@ int main(void)
     PersonajePrincipal jugador(&texJugador, { 200, 200 });
 
     // nube voladora
-    RectanguloMovimiento rect(&texturaNube, { 200, 200 }, { 230, 180 }, 120, 60);
+    RectanguloMovimiento rect(&texturaNube, { 200, 200 }, { 200, 150 }, 120, 60);
+
+    //enemigo
+    Enemigo enemigo(&texEnemigo, 
+        500, 300,      // posición inicial
+        60, 60,        // ancho - alto
+        150.0f,        // velocidad vertical
+        200.0f,        // límite arriba
+        600.0f         // límite abajo
+    );
+   
 
     //nubes quietas (hice un array para simplificar)
     PlataformaNube plataformas[] = {
     PlataformaNube(&texturaNube, 200, 500, 120, 40, WHITE),
     //PlataformaNube(&texturaNube, 400, 400, 120, 40, WHITE), //desactivada para darle dificultad pero lo activo para probar ganar
     PlataformaNube(&texturaNube, 800, 500, 120, 40, WHITE),
-    PlataformaNube(&texturaNube, 650, 120, 120, 40, WHITE),
-    PlataformaNube(&texturaNube, 1040, 120, 120, 40, WHITE)
+    PlataformaNube(&texturaNube, 650, 220, 120, 40, WHITE),
+    PlataformaNube(&texturaNube, 1040, 220, 120, 40, WHITE)
     };
     int cantPlataformas = sizeof(plataformas) / sizeof(plataformas[0]);
 
@@ -90,7 +102,7 @@ int main(void)
         }  
         if (IsKeyPressed(KEY_R)) {
             perdiste = false;
-            ganaste = false;   // si tenés la variable ganaste
+            ganaste = false;   // tecla para reiniciar
 
             jugador.reiniciar({ 200, 200 });
             rect.reiniciar({ 200, 200 }, { 350, 180 });
@@ -101,6 +113,7 @@ int main(void)
         if (!perdiste && !ganaste) {
             // Actualizo nube en movimiento y jugador SOLO si no perdiste
             rect.actualizar(dt, plataformas, cantPlataformas);
+            enemigo.actualizar(dt);
 
             jugador.actualizar(
                 dt,
@@ -109,7 +122,7 @@ int main(void)
                 cantPlataformas,
                 rect.getRect(), 
                 sonidoSalto
-            );
+                );
 
 
             // si el jugador toca el piso  GAME OVER
@@ -117,6 +130,10 @@ int main(void)
             float bottomJugador = rectJugador.y + rectJugador.height;
 
             if (bottomJugador >= piso.y) {
+                perdiste = true;
+            }
+			// si el jugador toca el enemigo GAME OVER
+            if (CheckCollisionRecs(jugador.getRect(), enemigo.getRect())) {
                 perdiste = true;
             }
 
@@ -160,6 +177,7 @@ int main(void)
         pisoVisual.dibujar(); // dibujo piso
         jugador.dibujar();// dibujo personaje
 		rect.dibujar(); // dibujo la nube movimiento
+        enemigo.dibujar();// dibujo el enemigo
 
         // dibujo nubes estaticas en array
         for (int i = 0; i < cantPlataformas; i++)
@@ -182,6 +200,7 @@ int main(void)
 		// Dibujamos textos informativos en pantalla
         DrawText(TextFormat("Resolucion: %dx%d", GetScreenWidth(), GetScreenHeight()), 10, 10, 20, BLACK);
         DrawText("mover-> D, mover <- A, Espacio salta, P para salir, R reiniciar ", 250, 10, 20, BLACK);
+        DrawText("El piso es lava! El tesoro gana! ", 10, 70, 20, BLACK);
         DrawText(TextFormat("Jugador X: %.1f Y: %.1f", jugador.getRect().x, jugador.getRect().y), 10, 40, 20, BLACK);
         // mensaje de game over
         if (perdiste || ganaste) {
@@ -215,6 +234,7 @@ int main(void)
     UnloadTexture(texturaNube);
     UnloadTexture(texJugador);
     UnloadTexture(texTesoro);
+    UnloadTexture(texEnemigo);
     CloseAudioDevice();
 
 

@@ -118,7 +118,7 @@ void BolaRebote::Draw() const
         (float)sprite.height
     };
 
-    // El sprite ocupa EXACTAMENTE el diámetro del círculo lógico
+    // El sprite  
     Rectangle dst = {
         pos.x,
         pos.y,
@@ -126,7 +126,7 @@ void BolaRebote::Draw() const
         r * 2.0f
     };
 
-    // Origen centrado ? sprite alineado al círculo
+    // Origen  ? sprite alineado al círculo
     Vector2 origin = { r, r };
 
     DrawTexturePro(

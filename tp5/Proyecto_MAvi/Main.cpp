@@ -1,11 +1,11 @@
 #ifndef NDEBUG
-#include <vld.h> // comentado si no lo tenés instalado
+#include <vld.h> 
 #endif
 
 #include "raylib.h"
 #include "BolaRebote.h"
 
-
+// Update bola
 static void UpdateBall(BolaRebote& bola, float dt, float speedMultiplier)
 {
     bola.Update(dt, speedMultiplier);
@@ -24,7 +24,7 @@ static void DrawFondoEscalado(const Texture2D& fondo, int screenW, int screenH)
     );
 }
 
-// DRAW
+// Dibujo
 static void DrawGame(const Texture2D& fondo, const BolaRebote& bola, float speedMultiplier, int screenW, int screenH)
 {
     BeginDrawing();
@@ -44,7 +44,7 @@ int main()
     const int screenWidth = 800;
     const int screenHeight = 600;
 
-    InitWindow(screenWidth, screenHeight, "Raylib - Bola Rebote");
+    InitWindow(screenWidth, screenHeight, " Bola Rebote");
     SetTargetFPS(60);
 
   

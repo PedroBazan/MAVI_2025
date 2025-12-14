@@ -1,4 +1,4 @@
-#include "PersonajePrincipal.h"
+ï»¿#include "PersonajePrincipal.h"
 #include "PlataformaNube.h"
 
 
@@ -49,14 +49,14 @@ void PersonajePrincipal::actualizar(float dt, Rectangle piso,const PlataformaNub
     // y si pisa alguna nube lo ponemos en false
     enElAire = true;
 
-    // Rectángulo del jugador para colisiones
+    // Rectï¿½ngulo del jugador para colisiones
     Rectangle rectJugador = getRect();
 
-    // --- Colisión con la nube que se mueve ---
+    // --- Colisiï¿½n con la nube que se mueve ---
     if (CheckCollisionRecs(rectJugador, rectNubeMov)) {
         bool caeDesdeArriba =
             (velocidad.y > 0) &&
-            (rectJugador.y + rectJugador.height <= rectNubeMov.y + 15);
+            (rectJugador.y + rectJugador.height <= rectNubeMov.y + 3);
 
         if (caeDesdeArriba) {
             posicion.y = rectNubeMov.y - alto;
@@ -66,7 +66,7 @@ void PersonajePrincipal::actualizar(float dt, Rectangle piso,const PlataformaNub
         }
     }
 
-    // --- Colisión con plataformas estáticas ---
+    // --- Colisiï¿½n con plataformas estï¿½ticas ---
     for (int i = 0; i < cantPlataformas; i++) {
         Rectangle nube = plataformas[i].getRect();
         rectJugador = getRect(); // por si ajustamos antes
@@ -74,7 +74,7 @@ void PersonajePrincipal::actualizar(float dt, Rectangle piso,const PlataformaNub
         if (CheckCollisionRecs(rectJugador, nube)) {
             bool caeDesdeArriba =
                 (velocidad.y > 0) &&
-                (rectJugador.y + rectJugador.height <= nube.y + 15);
+                (rectJugador.y + rectJugador.height <= nube.y + 3);
 
             if (caeDesdeArriba) {
                 posicion.y = nube.y - alto;

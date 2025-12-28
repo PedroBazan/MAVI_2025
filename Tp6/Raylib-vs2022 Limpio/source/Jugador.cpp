@@ -8,7 +8,7 @@ Jugador::Jugador()
     anguloDeg = 45.0f;
     potencia = 360.0f;
 
-    textura = LoadTexture("jugador.png"); // ✅ mismo criterio que FondoJuego.png
+    textura = LoadTexture("jugador.png"); 
 }
 
 Jugador::~Jugador()

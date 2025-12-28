@@ -1,6 +1,6 @@
 ﻿#include "SpriteA.h"
 
-SpriteA::SpriteA()   // ✅ SIN void
+SpriteA::SpriteA()  
 {
     textura = LoadTexture("assets/sprite.png");
     posicion = { 100.0f, 100.0f };

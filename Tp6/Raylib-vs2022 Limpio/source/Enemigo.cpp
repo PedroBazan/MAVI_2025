@@ -10,13 +10,13 @@ Enemigo::Enemigo()
 
     textura = LoadTexture("enemigo.png"); // sin assets
 
-    // Pool: arranca muerto
+  
     vivo = false;
     escapo = false;
     tocoSuelo = false;
     escapeConsumido = false;
 
-    // Hitbox por defecto (se recalcula al Inicializar)
+    // Hitbox
     tam = { (float)textura.width, (float)textura.height };
     float m = (textura.width < textura.height) ? (float)textura.width : (float)textura.height;
     radio = m * 0.5f;
@@ -90,7 +90,7 @@ void Enemigo::Update(float dt)
         return;
     }
 
-    // Se va de pantalla (extra)
+    // Se va de pantalla
     if (posicion.x > ANCHO + 80 || posicion.y > ALTO + 120)
     {
         escapo = true;

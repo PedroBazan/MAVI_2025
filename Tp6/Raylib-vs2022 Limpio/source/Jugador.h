@@ -5,8 +5,8 @@
 class Jugador
 {
 private:
-    Vector2 posicion;   // fijo
-    float anguloDeg;    // apuntado
+    Vector2 posicion;   
+    float anguloDeg;    //apunta
     float potencia;     // "aceleración inicial" / potencia del disparo
     Texture2D textura;
 
@@ -15,7 +15,7 @@ public:
     ~Jugador(); 
 
     void Draw() const;
-    void UpdateInput(); // EVENT
+    void UpdateInput(); 
     void DrawHUD(int puntaje, int vidas) const;
 
     Vector2 GetPosicion() const;

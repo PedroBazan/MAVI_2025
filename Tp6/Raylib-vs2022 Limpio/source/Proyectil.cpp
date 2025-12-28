@@ -6,7 +6,7 @@ Proyectil::Proyectil()
     velocidad = { 0,0 };
     activo = false;
 
-    textura = LoadTexture("proyectil.png"); // ✅ sin assets
+    textura = LoadTexture("proyectil.png"); // sin assets
 
     radio = (float)textura.width * 0.5f;
 }

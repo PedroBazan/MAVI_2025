@@ -93,7 +93,7 @@ int main()
         if (vidas > 0)
             proyectil.Update(dt);
 
-        bool vidaRestadaEsteFrame = false; // ✅ evita que baje 2 vidas en el mismo frame
+        bool vidaRestadaEsteFrame = false; // revisar porque baja 2 vidas en el segundo enemigo
 
         for (int i = 0; i < enemigos.size(); i++)
         {
@@ -117,7 +117,7 @@ int main()
             }
         }
 
-        // DRAW
+        // dibujo
         BeginDrawing();
         ClearBackground(RAYWHITE);
 
